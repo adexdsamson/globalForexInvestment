@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  
 }
 
 .App-logo {
@@ -35,4 +35,42 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.fade-appear {
+  opacity: 0;
+}
+.fade-appear .fade-appear-active {
+  opacity: 1;
+  transition: opacity 1000ms linear;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit .fade-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms linear;
+}
+.fade-exit-done {
+  opacity: 0;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter .fade-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms linear;
+}
+.button1 {
+  border-color: #001835;
+  color: #000;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: xx-small;
+  text-transform: uppercase;
+  padding-top: .3rem;
+  padding-bottom: .3rem;
 }
