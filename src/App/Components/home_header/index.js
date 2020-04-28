@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Grid, Container, Typography, makeStyles } from '@material-ui/core';
-import UserStores from "../../../store";
 
 
 const useStyles = makeStyles(theme => ({
@@ -15,10 +14,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const Header = () => {
+const Header = ({user}) => {
   const classes = useStyles();
-  const userInfo = UserStores.getUser();
-  const [user] = useState(userInfo);
   let date = new Date().toDateString();
   return ( 
     <Grid container>

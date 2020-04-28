@@ -104,7 +104,7 @@ const calc = (x, y) => [
 const trans = (x, y, s) =>
   `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
 
-const PriceContainer = ({ title, price, earn, month, day, pay }) => {
+const PriceContainer = ({ title, price, earn, month, day, pay, user }) => {
   const classes = useStyles();
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
@@ -139,7 +139,7 @@ const PriceContainer = ({ title, price, earn, month, day, pay }) => {
           </ul>
           <button onClick={pay} className={classes.button}>
             Purchase
-          </button>
+          </button> 
         </div>
       </div>
     </animated.div>

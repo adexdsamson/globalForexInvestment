@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Typography,
-  Button,
   makeStyles,
   Paper,
   Box,
@@ -76,16 +75,15 @@ const style = makeStyles(theme => ({
 
 const ListContainer = ({
   name,
-  bitcoin,
-  pay,
+  link,
   amount,
   earn,
   month,
   day,
-  id
+  id,
+  user
 }) => {
   const classes = style();
-  const [button, setButton] = useState(false);
   return (
     <Paper elevation={3} id={id} className={classes.card}>
       <Typography className={classes.text}>{name}</Typography>
@@ -106,20 +104,9 @@ const ListContainer = ({
           </li>
         </ul>
         <Box className={classes.box}>
-          {button ? (
-            <div className="btn-group" role="group" aria-label="Basic example">
-              <button onClick={pay} type="button" className="btn button1">
-                Credit card
-              </button>
-              <button onClick={bitcoin} type="button" className="btn button1">
-                bitcoin
-              </button>
-            </div>
-          ) : (
-            <Button onClick={() => setButton(true)} className={classes.button}>
-              purchase
-            </Button>
-          )}
+        {user ?<a type='button' href={link} className={classes.button}>
+            Purchase
+          </a> : 'Sign up to purchase'}
         </Box>
       </div>
     </Paper>

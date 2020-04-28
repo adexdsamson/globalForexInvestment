@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { makeStyles, Avatar, Typography, Container } from '@material-ui/core';
-import Img from '../../Assets//zachary-nelson.jpg';
+import Img from '../../Assets/zachary-nelson.jpg';
 import {info, infoHeader, infoText} from '../../Assets/variables';
 
 const useStyles = makeStyles(theme => ({
@@ -109,7 +109,7 @@ const Info = () => {
         </div>
       </section>
       <section className={classes.basic}>
-      <Container>
+      <Container fixed>
         <Typography variant='h2' className={classes.text}>
         {infoText}
         </Typography>

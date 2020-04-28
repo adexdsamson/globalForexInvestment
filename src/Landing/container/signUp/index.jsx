@@ -10,14 +10,82 @@ import {
   Select,
   MenuItem
 } from "@material-ui/core";
+import { Alert } from '@material-ui/lab';
 import { Person } from "@material-ui/icons";
 import FileUploader from "react-firebase-file-uploader";
 import compose from "recompose/compose";
 import Button from "../../components/button";
 import { storageRef } from "../../../firebase";
 import Loading from "../../components/loader";
-import Auth from '../../Action/AuthService';
+import { signUp } from  '../../../store/action';
+import { connect } from 'react-redux';
+import { getErrorState, getMessageState } from "../../../store/selector";
 
+const array = [
+  {
+    name: 'Access Bank Plc',
+    value: '044'
+  },
+  {
+    name: 'Access Bank Plc (Diamond)',
+    value: '063'
+  },
+  {
+    name: 'Ecobank Nigeria',
+    value: '050'
+  },
+  {
+    name: 'Fidelity Bank Plc',
+    value: '070'
+  },
+  {
+    name: 'First Bank of Nigeria',
+    value: '011'
+  },
+  {
+    name: 'FCMB',
+    value: '214'
+  },
+  {
+    name: 'Guaranty Trust Bamk',
+    value: '058'
+  },
+  {
+    name: 'Heritage Bank',
+    value: '030'
+  },
+  {
+    name: 'keystone Bank',
+    value: '082'
+  },
+  {
+    name: 'Polaris Bank',
+    value: '076'
+  },
+   {
+    name: 'Sterling Bank',
+    value: '232'
+  }, {
+    name: 'Stanbic Bank',
+    value: '039'
+  },
+  {
+    name: 'Union Bank',
+    value: '033'
+  },
+  {
+    name: 'Wema Bank',
+    value: '035'
+  },
+  {
+    name: 'Zenith Bank',
+    value: '057'
+  },
+  {
+    name: 'United Bank of Africa',
+    value: '033'
+  },
+]
 
 class SignUp extends Component {
   constructor(props) {
@@ -33,7 +101,8 @@ class SignUp extends Component {
       address: "",
       image: false,
       isLoading: false,
-      open: false
+      open: false,
+      error: null
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -54,7 +123,7 @@ class SignUp extends Component {
         bank: this.state.bank,
         accNum: this.state.accountNumber
       }
-      Auth.signUp(data, update)
+      this.props.onSignUp(data, update)
       this.setState({ isLoading: false });
     } else {
       this.setState({ image: true });
@@ -78,16 +147,21 @@ class SignUp extends Component {
 
   render() {
     let {
-      props: { classes },
+      props: { classes, error, message  },
       state: { img, bank, image, isLoading },
       handleUploadError,
       handleUploadSuccess,
       handleChange,
       handleSubmit
     } = this;
+    let menu = array.map(item => (
+      <MenuItem value={item.name}>{item.name}</MenuItem>
+    ))
+    let alert = error ? (<Alert className={classes.alert} severity="error"> { message } </Alert>): null;
     return (
       <Backdrop className={classes.backdrop} open={this.props.open}>
         <Box className={classes.login}>
+          { alert }
           <Grid item xs={12}>
             {isLoading ? <Loading /> : null}  
             <form onSubmit={handleSubmit} className={classes.form}>
@@ -194,7 +268,7 @@ class SignUp extends Component {
                     fullWidth
                     variant="outlined"
                     value={bank}
-                    label="Select a bank"
+                    placeholder="Select a bank"
                     className={classes.root}
                     onChange={handleChange}
                     inputProps={{
@@ -202,9 +276,7 @@ class SignUp extends Component {
                       id: "bank-native-simple"
                     }}
                   >
-                    <MenuItem value="gtbank">GTBANK</MenuItem>
-                    <MenuItem value="firstBank">FIRST BANK</MenuItem>
-                    <MenuItem value="access">ACCEESS BANK</MenuItem>
+                    {menu}
                   </Select>
                 </div>
               </div>
@@ -294,9 +366,23 @@ const Style = {
   },
   text: {
     color: "#000",
-    fontSize: ".9rem",
-    cursor: "pointer"
+    fontSize: "1rem",
+    cursor: "pointer",
+    marginTop: 12
   }
 };
 
-export default compose(withStyles(Style))(SignUp);
+const mapStateToProps = state => ({
+  error: getErrorState(state),
+  message: getMessageState(state)
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSignUp: (data, update) => {
+      dispatch(signUp(data, update));
+    },
+  }
+};
+
+export default compose(withStyles(Style), connect(mapStateToProps, mapDispatchToProps))(SignUp);

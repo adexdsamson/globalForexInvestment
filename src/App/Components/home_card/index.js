@@ -5,14 +5,14 @@ import Img from "../../Assets/bg-01.jpg";
 const useStyles = makeStyles(theme => ({
   card: {
     width: '100%',
-    borderRadius: 10,
+    borderRadius: 5,
     overflow: 'hidden',
     background: 'linear-gradient(top, #7579ff, #b224ef)',
     backgroundImage: `url(${Img})`,
-    height: 200,
+    height: 100,
     marginTop: 12,
     [theme.breakpoints.down('xs')]: {
-      height: 120,
+      height: 100,
     }
   },
   title: {
@@ -51,9 +51,7 @@ const Card = () => {
              EARNING INVESTMENT PLAN IS NOW OPEN.
             </Typography>
             <hr />
-            <Typography variant='body2' className={classes.color}>
-              Every payment is due in 30days
-            </Typography>
+           
           </Container>
         </Grid>
         </Container>

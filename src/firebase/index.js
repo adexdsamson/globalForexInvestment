@@ -7,13 +7,14 @@ import 'firebase/functions';
 // Configure Firebase.
 
 const config = {
-  apiKey: "AIzaSyAgeeAzdZVUDpnjaByuA2lMIIXOrD39Am4",
-  authDomain: "eapay-12ae3.firebaseapp.com",
-  databaseURL: "https://eapay-12ae3.firebaseio.com",
-  projectId: "eapay-12ae3",
-  storageBucket: "eapay-12ae3.appspot.com",
-  messagingSenderId: "56553798143",
-  appId: "1:56553798143:web:179bfd37815953acd38fca"
+  apiKey: "AIzaSyBmkBO01ekOoNJDJW6lPzQ3B1bElydQ3G8",
+  authDomain: "global-forex-investment-cf594.firebaseapp.com",
+  databaseURL: "https://global-forex-investment-cf594.firebaseio.com",
+  projectId: "global-forex-investment-cf594",
+  storageBucket: "global-forex-investment-cf594.appspot.com",
+  messagingSenderId: "898982758562",
+  appId: "1:898982758562:web:f5b132b83a84989a88affb",
+  measurementId: "G-5ELDX4BVC8"
 };
 
 app.initializeApp(config);
@@ -51,5 +52,6 @@ export const updateUser = update =>
 export const addDoc = user => Userdatabase.doc(user.id).set(user);
 
 
-export var onPayment = functionHttps.httpsCallable('onPayment')
-export var onEmail = functionHttps.httpsCallable('sendUserMail')
+export var onPayment = functionHttps.httpsCallable('chargeInvestment')
+
+

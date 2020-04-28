@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, Container, Typography, Avatar } from "@material-ui/core";
-import { Email, Phone } from "@material-ui/icons";
-import Img from '../../Assets/intro-bg.jpg';
+import { Email, Phone, LocationOn } from "@material-ui/icons";
+import Img from '../../Assets/gfi_logo.jpeg';
 
 const useStyles = makeStyles(theme => ({
   footer: {
@@ -106,6 +106,14 @@ const Footer = () => {
                   </span>
                   <span className={classes.text}>globalforexinvestment3@gmail.com</span>
                 </li>
+                <li className={classes.li}>
+                  <span className={classes.icon}>
+                    <LocationOn />
+                  </span>
+                  <span className={classes.text}>
+                    18, adewole area, along Mongona Estate, oluyole extension, ibadan
+                  </span>
+                </li>
               </ul>
             </div>
           </div>
@@ -115,7 +123,7 @@ const Footer = () => {
         <div className="col-md-12 text-center">
           <Typography className={classes.copyRight}>
             Copyright &copy; All rights reserved | This website is created by {' '}
-            <a style={{textDecoration: 'none'}} href="https://firebase.com" className="text-white">
+            <a style={{textDecoration: 'none'}} href="https://deola-adediran.firebaseapp.com" className="text-white">
              {" "} Deola Adediran
             </a>
           </Typography>

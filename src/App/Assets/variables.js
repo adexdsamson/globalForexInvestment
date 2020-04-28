@@ -55,29 +55,3 @@ export const Investment = [
     day: '60'
   }
 ]
-
-export  const paymentMethods = [{
-  supportedMethods: 'basic-card',
-  data: {
-    supportedNetworks: [
-      'visa', 'mastercard', 'amex', 'discover',
-      'diners', 'jcb', 'unionpay'
-    ]
-  }
-}]
-
-export const paymentDetails = price => ({
-  displayItems: [{
-    label: 'Fund Eapay wallet',
-    amount: { currency: 'NGN', value: price}
-  }],
-  total: {
-    label: 'Total Funds',
-    amount: { currency: 'NGN', value : price}
-  }
-});
-export const paymentOptions = {
-  requestPayerEmail: true,
-  requestPayerPhone: true,
-  requestPayerName: true,
-};

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { withStyles, Container, Typography } from "@material-ui/core";
+import { withStyles, Container, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@material-ui/core";
 import Price from "../../presentations/priceList";
 import { price } from "../../Assets/variables";
-import { onPayment } from "../../../firebase";
-import UserStores from "../../../store";
+import { connect } from 'react-redux';
 import { Alert } from "react-bootstrap";
+import { getUserState, getDialogState } from "../../../store/selector";
+import { compose } from "recompose";
+import { DIALOG } from "../../../store/constant";
 
 const Styles = {
   section: {
@@ -34,37 +36,26 @@ const Styles = {
 const getInvestment = (id) => price.filter((item) => item.id === id);
 
 class Pricing extends Component {
-  state = { value: "", open: false, body: "" };
 
-  handleClickOpen = () => {};
-
-  handleClose = (value) => {
-    this.setState({ open: false });
-    this.setState({ value: value });
-  };
-
-  handleInvestment = async (id) => {
-    const user = UserStores.getUser();
-    if (!user.name) {
-      console.log("Login or Register");
+  handlePayment = id => {
+    if (this.props.user.name) {
+      const array = getInvestment(id);
+      let link = array[0].link
+      window.open(link)
     } else {
-      let array = getInvestment(id);
-      let data = array[0];
-      onPayment(data)
-        .then((res) => console.log(res))
-        .catch((e) => console.log(e));
+      this.props.onAlert()
     }
+  }
+
+  handleClose = () => {
+    this.props.onAlert()
   };
 
-  handleBitcoinPayment = () => {
-    console.log("bitcoin payment");
-  };
 
   render() {
     let {
-      props: { classes },
-
-      handleInvestment,
+      props: { classes, user, open },
+      handleClose,
     } = this;
     return (
       <section className={classes.section}>
@@ -77,15 +68,40 @@ class Pricing extends Component {
           <div className={classes.priceContent}>
             <div className="row justify-content-center">
               {price.length ? (
-                <Price views={price} onPay={handleInvestment} />
+                <Price views={price} user={user} onPay={this.handlePayment} />
               ) : null}
             </div>
+            
           </div>
           <Alert headers='Login' />
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle> Please Register or Login </DialogTitle>
+            <DialogContent>
+              You are seeing this dialog, for you have not registered or logged in your account
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              I understand
+            </Button>
+            </DialogActions>
+          </Dialog>
         </Container>
       </section>
     );
   }
 }
 
-export default withStyles(Styles)(Pricing);
+const mapStateToProps = state => ({
+  user: getUserState(state),
+  open: getDialogState(state)
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAlert: () => {
+      dispatch({ type: DIALOG })
+    }
+  }
+}
+
+export default compose(withStyles(Styles), connect(mapStateToProps, mapDispatchToProps))(Pricing);

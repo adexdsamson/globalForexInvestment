@@ -6,8 +6,6 @@ import {
   Typography,
   withStyles
 } from "@material-ui/core";
-//import Auth from '../../Action/AuthService';
-import Axios from 'axios'
 
 const useStyles = {
   root: {
@@ -32,7 +30,7 @@ const useStyles = {
     paddingLeft: 15
   },
   h2: {
-    
+    fontFamily: "'Domine', serif",
     marginBottom: "1.8rem",
     fontWeight: 900,
     color: "#1001835"
@@ -45,7 +43,7 @@ const useStyles = {
     textTransform: "uppercase",
     height: "4rem !important",
     lineHeight: "3rem !important",
-    padding: "0rem 3rem !important",
+    padding: "1rem 3rem !important",
     "&:hover": {
       border: "1px solid #001835",
       background: "transparent",
@@ -68,32 +66,7 @@ class Contact extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.setState({ isLoading: true });
-    let data = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      body: this.state.comments,
-      subject: this.state.subject,
-      email: this.state.email,
-    }
-    //Auth.Email(data)
-    Axios({
-      method: 'post',
-      mode: 'no-cors',
-      url: '/sendMail/',
-      baseURL: 'https://us-central1-my-testimonies.cloudfunctions.net/widgets',
-      data: data,
-      headers:  { 
-        'Access-Control-Allow-Origin': '*', 
-        'content-type': 'application/x-www-form-urlencoded' 
-      }
-      
-    })
 
-    this.setState({ isLoading: false });
-  };
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -101,9 +74,8 @@ class Contact extends Component {
 
   render() {
     let {
-      state: { isLoading },
+      state: { isLoading, subject, email, comments, firstName, lastName },
       props: { classes },
-      handleSubmit,
       handleChange
     } = this;
     return (
@@ -115,7 +87,7 @@ class Contact extends Component {
                 Message Us
               </Typography>
 
-              <form onSubmit={handleSubmit} className={classes.form}>
+              <form className={classes.form}>
                 <div className="form-group row">
                   <div className="col-md-6 mb-3 mb-lg-0">
                     <input
@@ -180,11 +152,12 @@ class Contact extends Component {
                     {isLoading ? (
                       <CircularProgress />
                     ) : (
-                      <input
-                        type="submit"
+                      <a
                         className={classes.button2}
-                        value="Send Message"
-                      />
+                        href={`mailto:globalforexinvestment3@gmail.com?subject=${subject}!&cc=${email}!&body='My name is ${firstName} ${lastName}, I need you for the following: ${comments}'`}
+                      >
+                        Send Message
+                      </a>
                     )}
                   </div>
                 </div>

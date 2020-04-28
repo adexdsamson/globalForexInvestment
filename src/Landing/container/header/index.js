@@ -1,33 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Box,
   makeStyles,
   Container,
   Typography,
-  Avatar
+  Avatar,
 } from "@material-ui/core";
 import IMG from "../../Assets/verne-ho-0LAJfSNa-xQ-unsplash.jpg";
 import SignUp from "../../container/signUp";
 import Login from "../../container/login";
-import Auth from "../../Action/AuthService";
-import UserStores from "../../../store";
-import { useSpring, animated } from 'react-spring'
+import { logOut } from '../../../store/action';
+import { useSpring, animated } from "react-spring";
+import { getUserState, getLoginState, getSignUpState } from "../../../store/selector";
+import { LOGIN_STATE, SIGN_UP, REMOVE_ERROR} from '../../../store/constant';
+import { useSelector, useDispatch } from "react-redux";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   header: {
     color: "#fff",
     transition: "all 0.3s ease 0s",
     display: "inline-block",
     fontWeight: 400,
     width: "100%",
-    [theme.breakpoints.down("md")]: {}
+    [theme.breakpoints.down("md")]: {},
   },
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     width: "100%",
     height: 783,
-    position: 'absolute',
-    zIndex: 12
+    position: "absolute",
+    zIndex: 12,
   },
   topbar: {
     position: "absolute",
@@ -39,8 +41,8 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 15,
     paddingLeft: 35,
     [theme.breakpoints.down("md")]: {
-      paddingLeft: 15
-    }
+      paddingLeft: 15,
+    },
   },
   toptext: {
     fontSize: "1.3rem",
@@ -48,8 +50,8 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bolder",
     color: "#fff",
     [theme.breakpoints.down("md")]: {
-      fontSize: "1rem"
-    }
+      fontSize: "1rem",
+    },
   },
   Intro: {
     position: "relative",
@@ -63,12 +65,12 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "12.6rem",
     overflow: "hidden",
     [theme.breakpoints.down("md")]: {
-      paddingTop: "10.6rem"
-    }
+      paddingTop: "10.6rem",
+    },
   },
   content: {
     position: "relative",
-    zIndex: 600
+    zIndex: 600,
   },
   h3: {
     color: "#fff",
@@ -80,8 +82,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("md")]: {
       //fontSize: ".7rem",
       padding: 0,
-      marginBottom: 12
-    }
+      marginBottom: 12,
+    },
   },
   h1: {
     fontFamily: "'Domine', serif",
@@ -92,8 +94,8 @@ const useStyles = makeStyles(theme => ({
     textShadow: "0 1px 3px rgba(0, 0, 0, 0.15)",
     [theme.breakpoints.down("md")]: {
       //fontSize: "1.9rem",
-      padding: 0
-    }
+      padding: 0,
+    },
   },
   action1: {
     color: "#fff",
@@ -106,8 +108,8 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       borderLeft: "1px solid #001835",
       color: "#001835",
-      textDecoration: "none"
-    }
+      textDecoration: "none",
+    },
   },
   action2: {
     color: "#fff",
@@ -120,11 +122,11 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       borderLeft: "1px solid #001835",
       color: "#001835",
-      textDecoration: "none"
+      textDecoration: "none",
     },
     [theme.breakpoints.down("md")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   user: {
     color: "#fff",
@@ -134,13 +136,13 @@ const useStyles = makeStyles(theme => ({
 
     paddingLeft: 12,
     [theme.breakpoints.down("md")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   box: {
     paddingTop: 12,
     position: "relative",
-    zIndex: 600
+    zIndex: 600,
   },
   button: {
     border: "3px solid rgba(255, 255, 255, 0.6)",
@@ -155,46 +157,38 @@ const useStyles = makeStyles(theme => ({
     whiteSpace: "nowrap",
     "&:hover": {
       border: "3px solid #001835",
-      color: "#001835"
+      color: "#001835",
     },
     [theme.breakpoints.down("md")]: {
-      padding: "0rem .4rem .4rem "
-    }
-  }
+      padding: "0rem .4rem .4rem ",
+    },
+  },
 }));
 
 const Header = () => {
   const classes = useStyles();
-  const userInfo = UserStores.getUser();
-  const [signUp, setSign] = useState(false);
-  const [login, setLogin] = useState(false);
-  const [user, setUser] = useState(userInfo);
+  const user = useSelector(getUserState);
+  const login = useSelector(getLoginState);
+  const signUp = useSelector(getSignUpState);
+  const dispatch = useDispatch();
+
   const handleClose = () => {
-    setSign(!signUp);
+    dispatch({ type: SIGN_UP })
+    dispatch({ type: REMOVE_ERROR })
   };
   const props = useSpring({
     from: { opacity: 0, marginTop: -1000 },
-    to: { opacity: 1, marginTop: 0},
-    
-  })
-  const handleCloseLogin = () => {
-    setLogin(!login);
-  };
-  useEffect(() => {
-    UserStores.on("change", () => {
-      setUser(UserStores.getUser());
-      if (signUp) {
-        setSign(false);
-      } else {
-        setLogin(false);
-      }
-    });
+    to: { opacity: 1, marginTop: 0 },
   });
+  const handleCloseLogin = () => {
+    dispatch({ type: LOGIN_STATE })
+    dispatch({ type: REMOVE_ERROR })
+  };
+
   return (
     <header className={classes.header}>
-       <div className={classes.overlay}></div>
+      <div className={classes.overlay}></div>
       <Container className={classes.topbar}>
-     
         <Box display="inline-block">
           <Typography className={classes.toptext}>
             Global Forex Investment
@@ -202,13 +196,13 @@ const Header = () => {
         </Box>
         {user.name ? (
           <Box style={{ float: "right" }} display="flex">
-            <Avatar src={user.photoUrl} style={{ display: "flex" }} />
+            <Avatar src={user.img} style={{ display: "flex" }} />
 
             <Typography className={classes.user} display="inline">
               {user.name}
             </Typography>
             <Typography
-              onClick={() => Auth.logOut()}
+              onClick={() => dispatch(logOut())}
               className={classes.action1}
               display="inline"
             >
@@ -218,7 +212,7 @@ const Header = () => {
         ) : (
           <Box style={{ float: "right" }} display="inline-block">
             <Typography
-              onClick={() => setLogin(!login)}
+              onClick={() => dispatch({ type: LOGIN_STATE })}
               className={classes.action1}
               display="inline"
             >
@@ -226,7 +220,7 @@ const Header = () => {
             </Typography>
 
             <Typography
-              onClick={() => setSign(!signUp)}
+              onClick={() => dispatch({ type: SIGN_UP })}
               className={classes.action2}
               display="inline"
             >
@@ -236,20 +230,18 @@ const Header = () => {
         )}
       </Container>
       <Box className={classes.Intro}>
-        
         <animated.div style={props} className={classes.content}>
           <Typography variant="h6" className={classes.h3}>
             Welcome to global forex Investment
           </Typography>
-          
+
           <Typography variant="h1" className={classes.h1}>
             The Most Reputable Source of Investment
           </Typography>
-         
         </animated.div>
         <Box className={classes.box}>
           {user.name ? null : (
-            <button onClick={() => setSign(!signUp)} className={classes.button}>
+            <button onClick={() => dispatch({ type: SIGN_UP })} className={classes.button}>
               Create An Account
             </button>
           )}

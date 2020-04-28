@@ -5,13 +5,17 @@ import {
   withStyles,
   TextField,
   Backdrop,
-  Typography
+  Typography,
+  Avatar
 } from "@material-ui/core";
-
+import { Alert } from '@material-ui/lab';
 import compose from "recompose/compose";
 import Button from "../../components/button";
-import Auth from '../../Action/AuthService';
+import { login } from  '../../../store/action';
 import Loading from "../../components/loader";
+import Img from '../../Assets/gfi_logo.jpeg';
+import { connect } from 'react-redux';
+import { getErrorState, getMessageState } from "../../../store/selector";
 
 class Login extends Component {
   constructor(props) {
@@ -20,6 +24,7 @@ class Login extends Component {
       email: "",
       password: "",
       isLoading: false,
+      error: null
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -27,30 +32,37 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.setState({ isLoading: true });
-    Auth.login(this.state.email, this.state.password)
+    this.props.onLogin(this.state.email, this.state.password)
     this.setState({ isLoading: false });
   };
+
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
   
   render() {
+   
     let {
-      props: { classes },
+      props: { classes, error, message },
       state: { isLoading },
       handleChange,
       handleSubmit
     } = this;
+    let alert = error ? (<Alert className={classes.alert} severity="error"> { message } </Alert>): null;
     return (
       <Backdrop
         className={classes.backdrop}
         open={this.props.open}
       >
+       
         <Box className={classes.login}>
+          { alert }
           <Grid item xs={12}>
             {isLoading ? <Loading /> : null}
             <form onSubmit={handleSubmit} className={classes.form}>
-              <span className={classes.formLogo}></span>
+              <span className={classes.formLogo}>
+                <Avatar src={Img} className={classes.logo} />
+              </span>
 
               <span className={classes.formTitle}>Login</span>
 
@@ -90,6 +102,7 @@ class Login extends Component {
               </Box>
             </form>
           </Grid>
+          
         </Box>
       </Backdrop>
     );
@@ -104,7 +117,7 @@ const Style = {
   login: {
     width: "300px",
     borderRadius: "10px",
-    overflow: "hidden",
+    overflow: "auto",
     padding: "35px 15px 37px 15px",
     height: "33rem",
     background: "rgba(212, 208, 208)",
@@ -136,6 +149,10 @@ const Style = {
     margin: "0 auto",
     marginBottom: "12px"
   },
+  logo: {
+    width: "120px",
+    height: "120px",
+  },
   formTitle: {
     fontFamily: "'Domine', serif",
     fontSize: "1rem",
@@ -152,8 +169,27 @@ const Style = {
   text: {
     color: '#000',
     fontSize: '.9rem',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginTop: 12
+  },
+  alert: {
+    marginBottom: 12,
+
   }
 };
 
-export default compose(withStyles(Style))(Login);
+const mapStateToProps = state => ({
+  error: getErrorState(state),
+  message: getMessageState(state)
+})
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogin: (email, password) => {
+      dispatch(login(email, password));
+    },
+  }
+};
+
+export default compose(withStyles(Style), connect(mapStateToProps, mapDispatchToProps))(Login);

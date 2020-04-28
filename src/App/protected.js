@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
-import UserStores from "../store";
+import React from "react";
 import {Redirect} from '@reach/router';
+import { useSelector } from "react-redux";
+import { getUserState } from "../store/selector";
+
+
+
 
 export const protectedComponent = Component => props => {
-  const userInfo = UserStores.getUser();
-  const [user, setUser] = useState(userInfo);
-  useEffect(() => {
-    UserStores.on("change", () => {
-      setUser(UserStores.getUser());
-    });
-  });
-
-
+  const user = useSelector(getUserState);
   if (!user.name) return <Redirect from="" to="/app" noThrow />;
   return <Component {...props} />;
 }

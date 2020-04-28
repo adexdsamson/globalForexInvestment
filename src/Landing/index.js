@@ -4,9 +4,10 @@ import Header from './container/header';
 import Service from './container/service';
 import Info from './container/info';
 import Price from './container/pricing';
-import Testimony from './container/Testimonies';
+//import Testimony from './container/Testimonies';
 import Contact from './container/contact';
 import Footer from './container/footer';
+
 
 
 const Landing = () => {
@@ -16,7 +17,7 @@ const Landing = () => {
       <Service />
       <Info />
       <Price />
-      <Testimony />
+
       <Contact />
       <Footer />
     </Box>

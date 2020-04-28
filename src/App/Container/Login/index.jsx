@@ -1,11 +1,17 @@
 import React, { Component } from "react";
-import { Grid, Box, withStyles, TextField, Typography } from "@material-ui/core";
+import {
+  Grid,
+  Box,
+  withStyles,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { navigate } from "@reach/router";
 import Img from "../../Assets/bg-01.jpg";
 import compose from "recompose/compose";
 import Button from "../../Components/button";
-import Auth from '../../Action/AuthService';
-import UserStores from "../../../store";
+import { login } from "../../../store/action";
+import { connect } from "react-redux";
 
 class Login extends Component {
   constructor(props) {
@@ -14,28 +20,16 @@ class Login extends Component {
       email: "",
       password: "",
       isLoading: false,
-      user: {}
+      user: {},
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentWillMount(){
-    UserStores.on("change", () => {
-      this.setState({user: UserStores.getUser()});
-    });
-  }
-
-  componentWillUnmount() {
-    UserStores.on("change", () => {
-      this.setState({user: UserStores.getUser()});
-    });
-  }
-
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.setState({ isLoading: true });
-    Auth.login(this.state.email, this.state.password)
-    
+    this.props.onLogin(this.state.email, this.state.password);
+
     this.setState({ isLoading: false });
   };
 
@@ -47,7 +41,7 @@ class Login extends Component {
     let {
       props: { classes },
       handleSubmit,
-      handleChange
+      handleChange,
     } = this;
     return (
       <Grid
@@ -94,7 +88,7 @@ class Login extends Component {
                   <Typography
                     variant="h6"
                     className={classes.text}
-                    onClick={() => navigate('/app/sign_up')}
+                    onClick={() => navigate("/app/sign_up")}
                   >
                     {" "}
                     Sign Up{" "}
@@ -112,7 +106,7 @@ class Login extends Component {
 const Style = {
   limiter: {
     width: "100%",
-    margin: "0 auto"
+    margin: "0 auto",
   },
   container: {
     display: "flex",
@@ -128,7 +122,7 @@ const Style = {
     top: "0",
     height: "100vh",
     background: "rgba(212, 208, 208)",
-    backgroundImage: `url(${Img})`
+    backgroundImage: `url(${Img})`,
   },
   overlay: {
     position: "absolute",
@@ -139,7 +133,7 @@ const Style = {
     height: "100%",
     background: "#111111",
     opacity: 0.85,
-    zIndex: -2
+    zIndex: -2,
   },
   login: {
     width: "300px",
@@ -147,21 +141,21 @@ const Style = {
     overflow: "hidden",
     padding: "35px 15px 37px 15px",
     height: "33rem",
-    background: "rgba(212, 208, 208)"
+    background: "rgba(212, 208, 208)",
   },
   form: {
     width: "100%",
-    textAlign: "center"
+    textAlign: "center",
   },
   Button: {
     marginTop: 60,
     marginRight: 12,
     marginLeft: 12,
-    textAlign: "center"
+    textAlign: "center",
   },
   input: {
     color: "#fff !important",
-    marginTop: 20
+    marginTop: 20,
   },
   formLogo: {
     fontSize: "60px",
@@ -174,7 +168,7 @@ const Style = {
     borderRadius: "50%",
     background: "#001835",
     margin: "0 auto",
-    marginBottom: "12px"
+    marginBottom: "12px",
   },
   formTitle: {
     fontFamily: "Poppins-Medium",
@@ -184,17 +178,28 @@ const Style = {
     textAlign: "center",
     textTransform: "uppercase",
     display: "block",
-    marginBottom: "15px"
+    marginBottom: "15px",
   },
   copyRight: {
-    color: "#fff"
+    color: "#fff",
   },
   text: {
-    color: '#000',
-    fontSize: '1rem',
-    cursor: 'pointer',
-    marginTop: 12
-  }
+    color: "#000",
+    fontSize: "1rem",
+    cursor: "pointer",
+    marginTop: 12,
+  },
 };
 
-export default compose(withStyles(Style))(Login);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSignUp: (data) => {
+      dispatch(login(data));
+    },
+  };
+};
+
+export default compose(
+  withStyles(Style),
+  connect(null, mapDispatchToProps)
+)(Login);

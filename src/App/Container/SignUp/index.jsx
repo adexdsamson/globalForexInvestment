@@ -7,9 +7,9 @@ import {
   TextField,
   Typography,
   Select,
-  MenuItem
+  MenuItem,
+  LinearProgress
 } from "@material-ui/core";
-//import { Link } from "@reach/router";
 import Img from "../../Assets/bg-01.jpg";
 import { Person } from "@material-ui/icons";
 import { navigate } from "@reach/router";
@@ -18,7 +18,8 @@ import Button from "../../Components/button";
 import { storageRef } from "../../../firebase";
 import Loading from "../../Components/loader";
 import FileUploader from "react-firebase-file-uploader";
-import Auth from '../../Action/AuthService';
+import { connect } from 'react-redux';
+import { signUp } from  '../../../store/action';
 
 class SignUp extends Component {
   constructor(props) {
@@ -55,7 +56,7 @@ class SignUp extends Component {
         bank: this.state.bank,
         accNum: this.state.accountNumber
       }
-      Auth.signUp(data, update)
+      this.props.onSignUp(data, update)
       this.setState({ isLoading: false });
     } else {
       this.setState({ image: true });
@@ -64,6 +65,7 @@ class SignUp extends Component {
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
+  handleProgress = progress => this.setState({ progress });
 
   handleUploadError = error => {
     this.setState({ isUploading: false });
@@ -81,7 +83,7 @@ class SignUp extends Component {
   render() {
     let {
       props: { classes },
-      state: { img, bank, image, isLoading },
+      state: { img, bank, image, isLoading, progress },
       handleUploadError,
       handleUploadSuccess,
       handleChange,
@@ -102,6 +104,7 @@ class SignUp extends Component {
             <Box className={classes.login}>
               <Grid item xs={12}>
                 {isLoading ? <Loading /> : null}
+                <LinearProgress variant="determinate" value={progress} />
                 <form onSubmit={handleSubmit} className={classes.form}>
                   {image ? (
                     <h6
@@ -123,6 +126,7 @@ class SignUp extends Component {
                         storageRef={storageRef}
                         onUploadError={handleUploadError}
                         onUploadSuccess={handleUploadSuccess}
+                        onProgress={this.handleProgress}
                       />
                     </label>
                   )}
@@ -357,4 +361,12 @@ const Style = {
   }
 };
 
-export default compose(withStyles(Style))(SignUp);
+const mapDispatchToProps = dispatch => {
+  return {
+    onSignUp: data => {
+      dispatch(signUp(data));
+    },
+  }
+};
+
+export default compose(withStyles(Style), connect(null, mapDispatchToProps))(SignUp);
