@@ -7,14 +7,14 @@ import 'firebase/functions';
 // Configure Firebase.
 
 const config = {
-  apiKey: "AIzaSyBmkBO01ekOoNJDJW6lPzQ3B1bElydQ3G8",
-  authDomain: "global-forex-investment-cf594.firebaseapp.com",
-  databaseURL: "https://global-forex-investment-cf594.firebaseio.com",
-  projectId: "global-forex-investment-cf594",
-  storageBucket: "global-forex-investment-cf594.appspot.com",
-  messagingSenderId: "898982758562",
-  appId: "1:898982758562:web:f5b132b83a84989a88affb",
-  measurementId: "G-5ELDX4BVC8"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASEURL,
+  projectId: process.env.REACT_APP_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDERID,
+  appId: process.env.REACT_APP_APPID,
+  measurementId: process.env.REACT_APP_MEASUREMENTID
 };
 
 app.initializeApp(config);
