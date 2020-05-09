@@ -15,7 +15,7 @@ const Landing = () => {
     <Box>
       <Header />
       <Service />
-      <Info />
+      <Info />  
       <Price />
 
       <Contact />

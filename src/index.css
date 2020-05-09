@@ -7,8 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(212, 208, 208);
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body::-webkit-scrollbar {
+  appearance: none;
+  display: none;
 }

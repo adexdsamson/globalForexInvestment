@@ -94,6 +94,7 @@ class SignUp extends Component {
       lastName: "",
       firstName: "",
       accountNumber: "",
+      phoneNumber: '',
       email: "",
       password: "",
       img: "",
@@ -117,6 +118,7 @@ class SignUp extends Component {
       };
       let data = {
         email: this.state.email,
+        phoneNumber: this.state.phoneNumber,
         password: this.state.password,
         img: this.state.img,
         address: this.state.address,
@@ -155,7 +157,7 @@ class SignUp extends Component {
       handleSubmit
     } = this;
     let menu = array.map(item => (
-      <MenuItem value={item.name}>{item.name}</MenuItem>
+      <MenuItem key={item.name} value={item.value}>{item.name}</MenuItem>
     ))
     let alert = error ? (<Alert className={classes.alert} severity="error"> { message } </Alert>): null;
     return (
@@ -180,106 +182,112 @@ class SignUp extends Component {
                   <FileUploader
                     hidden
                     accept="image/*"
+                    beforeUploadStart={file => {if (file.size < 5 * 1024 * 1024 ) throw Error('File too large')}}
                     storageRef={storageRef}
                     onUploadError={handleUploadError}
                     onUploadSuccess={handleUploadSuccess}
+                    metadata={{
+                      contentType: 'image',
+                      size: 5000
+                    }}
                   />
                 </label>
               )}
 
               <span className={classes.formTitle}>Sign Up</span>
+            
+              <TextField
+                fullWidth
+                name="firstName"
+                required
+                className={classes.root}
+                variant="outlined"
+                label="First Name"
+                autoComplete="fname"
+                type="text"
+                onChange={handleChange}
+              />
+            
+            
+              <TextField
+                fullWidth
+                name="lastName"
+                required
+                className={classes.root}
+                variant="outlined"
+                type="text"
+                label="Last Name"
+                onChange={handleChange}
+              />
+            
+              <TextField
+                fullWidth
+                name="phoneNumber"
+                required
+                className={classes.root}
+                variant="outlined"
+                type="tel"
+                label="Phone Number"
+                onChange={handleChange}
+              />
 
-              <div className="row">
-                <div className="col-md-6">
-                  <TextField
-                    fullWidth
-                    name="firstName"
-                    required
-                    className={classes.root}
-                    variant="outlined"
-                    label="First Name"
-                    autoComplete="fname"
-                    type="text"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <TextField
-                    fullWidth
-                    name="lastName"
-                    required
-                    className={classes.root}
-                    variant="outlined"
-                    type="text"
-                    label="Last Name"
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+          
+              <TextField
+                fullWidth
+                required
+                name="email"
+                type="email"
+                className={classes.root}
+                variant="outlined"
+                label="Email"
+                onChange={handleChange}
+              />
+          
+            
+              <TextField
+                fullWidth
+                required
+                name="password"
+                color="secondary"
+                className={classes.root}
+                variant="outlined"
+                type="password"
+                label="Password"
+                onChange={handleChange}
+              />
 
-              <div className="row">
-                <div className="col-md-6">
-                  <TextField
-                    fullWidth
-                    required
-                    name="email"
-                    type="email"
-                    className={classes.root}
-                    variant="outlined"
-                    label="Email"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <TextField
-                    fullWidth
-                    required
-                    name="password"
-                    color="secondary"
-                    className={classes.root}
-                    variant="outlined"
-                    type="password"
-                    label="Password"
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
 
-              <div className="row">
-                <div className="col-md-6">
-                  <TextField
-                    required
-                    id="accNumber"
-                    className={classes.root}
-                    name="accountNumber"
-                    minLength="10"
-                    maxLength="10"
-                    label="Account Number"
-                    type="number"
-                    variant="outlined"
-                    fullWidth
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <Select
-                    name="bank"
-                    required
-                    fullWidth
-                    variant="outlined"
-                    value={bank}
-                    placeholder="Select a bank"
-                    className={classes.root}
-                    onChange={handleChange}
-                    inputProps={{
-                      name: "bank",
-                      id: "bank-native-simple"
-                    }}
-                  >
-                    {menu}
-                  </Select>
-                </div>
-              </div>
+
+              <TextField
+                required
+                id="accNumber"
+                className={classes.root}
+                name="accountNumber"
+                minLength="10"
+                maxLength="10"
+                label="Account Number"
+                type="number"
+                variant="outlined"
+                fullWidth
+                onChange={handleChange}
+              />
+
+              <Select
+                name="bank"
+                required
+                fullWidth
+                variant="outlined"
+                value={bank}
+                placeholder="Select a bank"
+                className={classes.root}
+                onChange={handleChange}
+                inputProps={{
+                  name: "bank",
+                  id: "bank-native-simple"
+                }}
+              >
+                {menu}
+              </Select>
 
               <TextField
                 required
@@ -325,7 +333,10 @@ const Style = {
     padding: "35px 15px 37px 15px",
     height: "90%",
     background: "#fff",
-    border: "1px solid #001835"
+    border: "1px solid #001835",
+    '&::-webkit-scrollbar':{
+      display: 'none'
+    }
   },
   form: {
     width: "100%"

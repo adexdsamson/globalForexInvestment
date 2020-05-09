@@ -38,7 +38,9 @@ const useStyles = makeStyles(theme => ({
     fontFamily: "'Domine', serif",
     position: 'relative',
     paddingBottom: '1.5rem',
-    
+    [theme.breakpoints.down('md')]:{
+      textAlign: 'center'
+    }
   },
   h5: {
     color: 'rgba(0, 24, 53, 0.4)',

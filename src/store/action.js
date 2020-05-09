@@ -22,6 +22,7 @@ export const signUp = (data, update) => (dispatch) => {
           name: update.name,
           email: user.user.email,
           img: update.imageURL,
+          phoneNumber: data.phoneNumber,
           emailVerified: user.user.emailVerified,
           id: user.user.uid
         }));
@@ -30,7 +31,10 @@ export const signUp = (data, update) => (dispatch) => {
         bank: data.bank,
         address: data.address,
         imgURL: data.img,
-        id: user.user.uid
+        phoneNumber: data.phoneNumber,
+        id: user.user.uid,
+        name: user.user.displayName,
+        email: user.user.email
       });
       dispatch({ type: SIGN_UP})
     })

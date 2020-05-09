@@ -1,6 +1,6 @@
 import React, {Suspense, lazy} from 'react';
-import './App.css';
-import Loader from './Landing/components/loader'
+import Loader from './Landing/components/loader';
+import ErrorBoundary from './Landing/components/ErrorBoundaries';
 //import AppRoute from './App/app';
 // const Application = lazy(() => import('./App/index'))
 // const Login = lazy(() => import('./App/Container/Login'));
@@ -13,7 +13,9 @@ const Landing = lazy(() => import('./Landing'))
 function App() {
   return (
     <Suspense fallback={<Loader />}>
-      <Landing path='/' />
+      <ErrorBoundary>
+        <Landing path='/' />
+      </ErrorBoundary>
     </Suspense>
   );
 }

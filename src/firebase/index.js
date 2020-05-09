@@ -1,19 +1,16 @@
 import app from "firebase/app";
-import "firebase/auth";
-import "@firebase/storage";
-import "@firebase/firestore";
-import 'firebase/functions';
+import "firebase/<PACKAGE>";
 
 // Configure Firebase.
 
 const config = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTHDOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASEURL,
-  projectId: process.env.REACT_APP_PROJECTID,
+  apiKey: process.env.REACT_APP_API_KEY ,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN ,
+  databaseURL: process.env.REACT_APP_DATABASEURL ,
+  projectId: process.env.REACT_APP_PROJECTID ,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDERID,
-  appId: process.env.REACT_APP_APPID,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDERID ,
+  appId: process.env.REACT_APP_APPID ,
   measurementId: process.env.REACT_APP_MEASUREMENTID
 };
 
@@ -52,6 +49,6 @@ export const updateUser = update =>
 export const addDoc = user => Userdatabase.doc(user.id).set(user);
 
 
-export var onPayment = functionHttps.httpsCallable('chargeInvestment')
+//export var onPayment = functionHttps.httpsCallable('chargeInvestment')
 
 

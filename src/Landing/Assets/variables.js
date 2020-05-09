@@ -5,54 +5,54 @@ export const price = [
   {
     id: 'mnbvdrtyuil', 
     title: 'Starter', 
-    price: '50,000', 
+    price: '20,000', 
     link: 'https://paystack.com/pay/gfi-starter-plan',
-    earn: '100,000', 
+    earn: '40,000', 
     month: '2', 
     day: '60'
   },
   {
     id: 'kjhgfdsxcvbnm', 
     title: 'standard', 
-    price: '100,000',
+    price: '40,000',
     link: 'https://paystack.com/pay/gfi-standard-plan',
-    earn: '200,000', 
+    earn: '80,000', 
     month: '2', 
     day: '60'
   },
   {
     id: 'sfghbvrthb', 
     title: 'bronse', 
-    price: '200,000', 
+    price: '60,000', 
     link: 'https://paystack.com/pay/gfi-bronse-plan',
-    earn: '400,000', 
+    earn: '120,000', 
     month: '2', 
     day: '60'
   },
   {
     id: 'roiuythjuh', 
     title: 'silver', 
-    price: '300,000', 
+    price: '80,000', 
     link: 'https://paystack.com/pay/gfi-silver-plan',
-    earn: '600,000', 
+    earn: '160,000', 
     month: '2', 
     day: '60'
   },
   {
     id: 'roiuesdfgt', 
     title: 'Gold', 
-    price: '400,000', 
+    price: '100,000', 
     link: 'https://paystack.com/pay/gfi-gold-plan',
-    earn: '500,000', 
+    earn: '200,000', 
     month: '2', 
     day: '60'
   },
   {
     id: 'rongfcvbnjhg', 
     title: 'platinum', 
-    price: '500,000', 
+    price: '200,000', 
     link: 'https://paystack.com/pay/gfi-platinum-plan',
-    earn: '1,000,000', 
+    earn: '400,000', 
     month: '2', 
     day: '60'
   },

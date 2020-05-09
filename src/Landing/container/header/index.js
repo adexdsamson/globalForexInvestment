@@ -177,7 +177,7 @@ const Header = () => {
     dispatch({ type: REMOVE_ERROR })
   };
   const props = useSpring({
-    from: { opacity: 0, marginTop: -1000 },
+    from: { opacity: 0, marginTop: -1000, delay: 3000 },
     to: { opacity: 1, marginTop: 0 },
   });
   const handleCloseLogin = () => {
@@ -196,7 +196,7 @@ const Header = () => {
         </Box>
         {user.name ? (
           <Box style={{ float: "right" }} display="flex">
-            <Avatar src={user.img} style={{ display: "flex" }} />
+            <Avatar src={user.img} style={{ display: "flex" }} alt='users image' />
 
             <Typography className={classes.user} display="inline">
               {user.name}
@@ -235,7 +235,7 @@ const Header = () => {
             Welcome to global forex Investment
           </Typography>
 
-          <Typography variant="h1" className={classes.h1}>
+          <Typography variant="h2" className={classes.h1}>
             The Most Reputable Source of Investment
           </Typography>
         </animated.div>

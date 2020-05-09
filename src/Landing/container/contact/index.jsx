@@ -47,7 +47,8 @@ const useStyles = {
     "&:hover": {
       border: "1px solid #001835",
       background: "transparent",
-      color: "#001835"
+      color: "#001835",
+      textDecoration: 'none'
     }
   }
 };
