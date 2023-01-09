@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "firebase-admin": "~6.0.0",
-    "firebase-functions": "^2.1.0",
+    "firebase-admin": "~11.4.1",
+    "firebase-functions": "^4.1.1",
     "nodemailer": "^6.4.6",
     "paystack": "^2.0.1",
     "react-redux": "^7.2.0",
